@@ -1,0 +1,67 @@
+package protoServer;
+
+option optimize_for = SPEED;
+
+message AnyRequest {
+  message GetHotelList {
+    optional string date = 1;
+    optional string city = 2;
+    optional int32 max_price = 3;
+  }
+  optional GetHotelList hotelRequest = 1;
+
+
+  message GetRoomList{
+    optional int32 hotel_id = 1;
+    optional string date = 2;
+  }
+  optional GetRoomList roomsRequest = 2;
+
+
+  message BookHotel {
+    optional int32 hotel_id = 1;
+    optional string date = 2;
+    optional string first_name = 3;
+    optional string surname = 4;
+    optional string card_number = 5;
+    optional int32 CVV = 6;
+  }
+  optional BookHotel bookRequest = 3;
+}
+
+message DemoResponse {
+  message Hotel{
+    optional int32 hotel_id = 1;
+    optional string name = 2;
+    optional int32 max_price = 3;
+    optional int32 min_price = 4;
+  }
+
+
+  message ResponseGetHotelList {
+    repeated Hotel hotels = 1;
+  }
+  optional ResponseGetHotelList hotelRequest = 1;
+
+  enum Room_type {
+    first = 0;
+    second = 1;
+    third = 2;
+    four = 3;
+  }
+
+  message Room{
+    optional int32 price = 1;
+    optional Room_type type = 2 [default = first];
+  }
+
+  message ResponseGetRoomList{
+    repeated Room rooms = 1;
+  }
+  optional ResponseGetRoomList roomsRequest = 2;
+
+  message ResponseBookHotel {
+    optional bool result = 1;
+  }
+  optional ResponseBookHotel bookRequest = 3;
+}
